@@ -8,6 +8,16 @@
   const hpBar = document.getElementById('hpBar');
   const dashBar = document.getElementById('dashBar');
   const comboBar = document.getElementById('comboBar');
+
+  const hpText = document.getElementById('hpText');
+  const dashText = document.getElementById('dashText');
+  const comboText = document.getElementById('comboText');
+  const bossHud = document.getElementById('bossHud');
+  const bossHpBar = document.getElementById('bossHpBar');
+  const bossHpText = document.getElementById('bossHpText');
+  const bossBadge = document.getElementById('bossBadge');
+  const warningPanel = document.getElementById('warningPanel');
+
   const stageLabel = document.getElementById('stageLabel');
   const timerLabel = document.getElementById('timerLabel');
   const objectiveLabel = document.getElementById('objectiveLabel');
@@ -828,11 +838,46 @@
 
   function updateHUD() {
     const p = game.player;
+
     hpBar.style.width = `${clamp((p.hp / p.maxHp) * 100, 0, 100)}%`;
     dashBar.style.width = `${clamp((p.dash / p.maxDash) * 100, 0, 100)}%`;
     comboBar.style.width = `${clamp((game.comboTimer / (2.1 * (hasCharm('edge') ? 1.25 : 1))) * 100, 0, 100)}%`;
-    timerLabel.textContent = `TIME ${game.time.toFixed(2)}  SCORE ${Math.floor(game.score)}  GEAR ${save.gachaCurrency}`;
-    warningLabel.textContent = inDangerZone(p.x, p.y) ? '⚠ WARNING: HAZARD ZONE LOCK' : p.hp < 24 ? '⚠ WARNING: CRITICAL HP' : isBossStage() ? '⚠ WARNING: PRISM CORE OVERDRIVE' : `COMBO x${Math.max(1, Math.floor(game.combo))}`;
+
+    hpText.textContent = `${Math.floor(Math.max(0, p.hp))} / ${p.maxHp}`;
+    dashText.textContent = `${Math.floor(p.dash)} / ${p.maxDash}`;
+    comboText.textContent = `x${Math.max(0, Math.floor(game.combo))}`;
+
+    const mins = Math.floor(game.time / 60).toString().padStart(2, '0');
+    const secs = (game.time % 60).toFixed(2).padStart(5, '0');
+    timerLabel.textContent = `${mins}:${secs}`;
+
+    stageLabel.textContent = `STAGE ${game.stage} / ${game.totalStages}`;
+    objectiveLabel.textContent = isBossStage()
+      ? `Defeat Prism Core · Score ${Math.floor(game.score)}`
+      : `Clear ${Math.max(0, game.enemies.filter((e) => e.type !== 'boss').length)} Targets`;
+
+    bossBadge.style.display = isBossStage() ? 'inline-block' : 'none';
+    const boss = game.enemies.find((e) => e.type === 'boss');
+
+    if (isBossStage() && boss) {
+      bossHud.style.display = 'block';
+      bossHpBar.style.width = `${clamp((boss.hp / boss.maxHp) * 100, 0, 100)}%`;
+      bossHpText.textContent = `${Math.floor(Math.max(0, boss.hp))} / ${boss.maxHp}`;
+    } else {
+      bossHud.style.display = 'none';
+    }
+
+    let warningMsg = '';
+    if (inDangerZone(p.x, p.y)) warningMsg = 'HAZARD ZONE LOCK';
+    else if (p.hp < 24) warningMsg = 'CRITICAL HP';
+    else if (isBossStage()) warningMsg = 'PRISM CORE OVERDRIVE';
+
+    if (warningMsg) {
+      warningPanel.classList.remove('hidden');
+      warningLabel.textContent = warningMsg;
+    } else {
+      warningPanel.classList.add('hidden');
+    }
   }
 
   function drawBackground() {
@@ -1011,10 +1056,12 @@
       }
       if (e.type === 'boss') {
         drawBossCoreAura(e);
+        /*
         ctx.fillStyle = '#fff6';
         ctx.fillRect(e.x - 80, e.y - 60, 160, 8);
         ctx.fillStyle = '#ff738c';
         ctx.fillRect(e.x - 80, e.y - 60, 160 * (e.hp / e.maxHp), 8);
+        */
       }
       ctx.globalAlpha = 1;
       e.hit *= 0.82;
