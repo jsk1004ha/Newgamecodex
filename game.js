@@ -117,7 +117,7 @@
     ['a21', '??? 숨김: 패링만으로 보스 처치'], ['a22', '??? 숨김: 가챠 없이 하드 클리어'], ['a23', '??? 숨김: 노대시 Stage 클리어'], ['a24', '??? 숨김: 12스테이지 올클리어 3회']
   ];
 
-  const COLORS = { bgA: '#161026', bgB: '#0d0a16', hazard: '#ff3f6c', warn: '#ffd66b', good: '#86ff88' };
+  const COLORS = { bgA: '#120a25', bgB: '#080513', hazard: '#ff3f6c', warn: '#ffd66b', good: '#86ff88' };
   const rankOrder = ['SSR', 'SR', 'R', 'N', 'E', 'L', 'M', 'G'];
 
   const game = {
@@ -322,7 +322,7 @@
     }
 
     stageLabel.textContent = `STAGE ${game.stage}/${game.totalStages}${isBossStage() ? ' BOSS' : ''}`;
-    objectiveLabel.textContent = isBossStage() ? '보스 패턴을 읽고 반격하라' : `목표: ${game.enemies.length}개체 돌파`;
+    objectiveLabel.textContent = isBossStage() ? 'OBJECTIVE: SHATTER THE PRISM CORE' : `OBJECTIVE: CLEAR ${game.enemies.length} TARGETS`;
   }
 
   function addParticles(x, y, color, n = 12, speed = 220, ribbon = false) {
@@ -831,25 +831,111 @@
     hpBar.style.width = `${clamp((p.hp / p.maxHp) * 100, 0, 100)}%`;
     dashBar.style.width = `${clamp((p.dash / p.maxDash) * 100, 0, 100)}%`;
     comboBar.style.width = `${clamp((game.comboTimer / (2.1 * (hasCharm('edge') ? 1.25 : 1))) * 100, 0, 100)}%`;
-    timerLabel.textContent = `TIME ${game.time.toFixed(1)}s  SCORE ${Math.floor(game.score)}  GEAR ${save.gachaCurrency}`;
-    warningLabel.textContent = inDangerZone(p.x, p.y) ? '⚠ HAZARD ACTIVE' : p.hp < 24 ? '⚠ LOW HP' : isBossStage() ? '⚠ BOSS PATTERN' : '';
+    timerLabel.textContent = `TIME ${game.time.toFixed(2)}  SCORE ${Math.floor(game.score)}  GEAR ${save.gachaCurrency}`;
+    warningLabel.textContent = inDangerZone(p.x, p.y) ? '⚠ WARNING: HAZARD ZONE LOCK' : p.hp < 24 ? '⚠ WARNING: CRITICAL HP' : isBossStage() ? '⚠ WARNING: PRISM CORE OVERDRIVE' : `COMBO x${Math.max(1, Math.floor(game.combo))}`;
   }
 
   function drawBackground() {
-    const g = ctx.createLinearGradient(0, 0, 0, H());
-    g.addColorStop(0, COLORS.bgA);
+    const g = ctx.createRadialGradient(W() * 0.5, H() * 0.58, 90, W() * 0.5, H() * 0.5, W() * 0.9);
+    g.addColorStop(0, '#28143f');
+    g.addColorStop(0.55, COLORS.bgA);
     g.addColorStop(1, COLORS.bgB);
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W(), H());
 
-    const pulse = 0.2 + Math.sin(game.time * 2) * 0.08;
-    ctx.globalAlpha = pulse + game.stage * 0.018;
-    ctx.fillStyle = game.stage % 2 ? '#3f2a5e' : '#294a54';
-    for (let i = 0; i < 8; i++) {
-      const x = (i * 220 + (game.time * 42) % 220) - 220;
-      ctx.fillRect(x, 0, 58, H());
+    const t = game.time;
+    ctx.strokeStyle = '#4fd7ff1e';
+    ctx.lineWidth = 1;
+    const cell = 44;
+    for (let x = -cell; x < W() + cell; x += cell) {
+      ctx.beginPath();
+      ctx.moveTo(x + ((t * 24) % cell), 0);
+      ctx.lineTo(x + ((t * 24) % cell), H());
+      ctx.stroke();
+    }
+    for (let y = -cell; y < H() + cell; y += cell) {
+      ctx.beginPath();
+      ctx.moveTo(0, y + ((t * 12) % cell));
+      ctx.lineTo(W(), y + ((t * 12) % cell));
+      ctx.stroke();
+    }
+
+    for (let i = 0; i < 4; i++) {
+      const rr = 90 + i * 76 + Math.sin(t * 1.6 + i) * 10;
+      ctx.strokeStyle = i % 2 ? '#ff346a28' : '#ff8d2f22';
+      ctx.lineWidth = i % 2 ? 2 : 3;
+      ctx.beginPath();
+      ctx.arc(W() * 0.5, H() * 0.62, rr, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    const pulse = 0.14 + Math.sin(t * 2.4) * 0.04;
+    ctx.globalAlpha = pulse + game.stage * 0.01;
+    ctx.fillStyle = game.stage % 2 ? '#6e3eff1b' : '#2cf1ff17';
+    for (let i = 0; i < 10; i++) {
+      const x = (i * 170 + (t * 54) % 170) - 170;
+      ctx.fillRect(x, 0, 48, H());
     }
     ctx.globalAlpha = 1;
+  }
+
+
+  function drawBossCoreAura(boss) {
+    const spin = game.time * 1.8;
+    ctx.save();
+    ctx.translate(boss.x, boss.y);
+
+    ctx.strokeStyle = '#ff3b6f55';
+    ctx.lineWidth = 3;
+    for (let i = 0; i < 3; i++) {
+      ctx.beginPath();
+      ctx.arc(0, 0, 78 + i * 28 + Math.sin(spin + i) * 4, spin * (0.28 + i * 0.06), spin * (0.28 + i * 0.06) + Math.PI * 1.2);
+      ctx.stroke();
+    }
+
+    for (let i = 0; i < 8; i++) {
+      const a = spin + i * (Math.PI * 2 / 8);
+      const rr = boss.r + 30 + Math.sin(spin * 1.6 + i) * 10;
+      const px = Math.cos(a) * rr;
+      const py = Math.sin(a) * rr;
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.rotate(a + Math.PI / 2);
+      ctx.fillStyle = '#120d1f';
+      ctx.strokeStyle = '#ff4f95aa';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, -18);
+      ctx.lineTo(11, 0);
+      ctx.lineTo(0, 20);
+      ctx.lineTo(-11, 0);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    const core = ctx.createRadialGradient(0, 0, 6, 0, 0, 42);
+    core.addColorStop(0, '#ffd5ef');
+    core.addColorStop(0.35, '#ff4f9e');
+    core.addColorStop(1, '#58143d00');
+    ctx.fillStyle = core;
+    ctx.beginPath();
+    ctx.arc(0, 0, 42, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawUiScanLines() {
+    if (save.settings.reduceFlash) return;
+    const row = 4;
+    ctx.fillStyle = '#ffffff08';
+    for (let y = (game.time * 60) % row; y < H(); y += row * 2) ctx.fillRect(0, y, W(), 1);
+    const vignette = ctx.createRadialGradient(W() / 2, H() / 2, W() * 0.3, W() / 2, H() / 2, W() * 0.7);
+    vignette.addColorStop(0, '#00000000');
+    vignette.addColorStop(1, '#00000099');
+    ctx.fillStyle = vignette;
+    ctx.fillRect(0, 0, W(), H());
   }
 
   function draw() {
@@ -924,6 +1010,7 @@
         ctx.stroke();
       }
       if (e.type === 'boss') {
+        drawBossCoreAura(e);
         ctx.fillStyle = '#fff6';
         ctx.fillRect(e.x - 80, e.y - 60, 160, 8);
         ctx.fillStyle = '#ff738c';
@@ -992,6 +1079,8 @@
       ctx.fillRect(pz.x, pz.y, pz.size, pz.size);
     }
     ctx.globalAlpha = 1;
+
+    drawUiScanLines();
 
     const p = game.player || { x: 0, y: 0, dir: 0, skin: 'prism', inv: 0, animT: 0 };
     const skin = skins[p.skin] || skins.prism;
