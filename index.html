@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shardsprint: Counter Pulse</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <h1>SHARDSPRINT: COUNTER PULSE</h1>
+      <div class="meta">Offline Vanilla JS Action</div>
+    </header>
+
+    <main>
+      <canvas id="game" width="1280" height="720" aria-label="액션 게임 캔버스"></canvas>
+
+      <section id="menuLayer" class="panel active" aria-live="polite"></section>
+
+      <section id="hud" class="hud hidden">
+        <div class="hud-left">
+          <div class="meter"><span>HP</span><div id="hpBar" class="bar fill-hp"></div></div>
+          <div class="meter"><span>DASH</span><div id="dashBar" class="bar fill-dash"></div></div>
+          <div class="meter"><span>COMBO</span><div id="comboBar" class="bar fill-combo"></div></div>
+        </div>
+        <div class="hud-center">
+          <div id="stageLabel"></div>
+          <div id="timerLabel"></div>
+        </div>
+        <div class="hud-right">
+          <div id="objectiveLabel"></div>
+          <div id="warningLabel"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
