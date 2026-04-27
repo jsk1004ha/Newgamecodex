@@ -29,14 +29,6 @@ main { position: relative; flex: 1; display: grid; place-items: center; backgrou
   font-family: var(--font-main); font-weight: 600; text-transform: uppercase;
   letter-spacing: 0.05em; text-shadow: 0 0 4px rgba(0,0,0,0.8);
 }
-#hud svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  flex: 0 0 auto;
-  max-width: 100%;
-  max-height: 100%;
-}
 .hidden { display: none !important; }
 
 /* 공통 패널 스타일 (Glassmorphism & Cyberpunk) */
@@ -57,8 +49,9 @@ main { position: relative; flex: 1; display: grid; place-items: center; backgrou
   background: var(--panel); backdrop-filter: blur(4px);
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   border: 2px solid;
+  font-size: 22px;
+  line-height: 1;
 }
-.hex-icon svg { width: 24px !important; height: 24px !important; }
 .hp-row .hex-icon { border-color: var(--neon-pink); color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink); }
 .dash-row .hex-icon { border-color: var(--neon-cyan); color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan); }
 .combo-row .hex-icon { border-color: var(--neon-orange); color: var(--neon-orange); text-shadow: 0 0 8px var(--neon-orange); }
@@ -106,7 +99,13 @@ main { position: relative; flex: 1; display: grid; place-items: center; backgrou
 .stage-info { display: flex; justify-content: space-between; font-size: 1.2rem; margin-bottom: 4px; }
 .boss-badge { color: var(--neon-pink); border: 1px solid var(--neon-pink); padding: 0 6px; border-radius: 2px; }
 .timer-info { font-size: 1.4rem; color: #d6cbff; display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
-.inline-icon { width: 20px !important; height: 20px !important; }
+.inline-icon {
+  width: 20px;
+  display: inline-grid;
+  place-items: center;
+  font-size: 18px;
+  line-height: 1;
+}
 
 .objective-panel {
   background: rgba(10, 5, 20, 0.7); border: 1px solid #4a3b69;
@@ -123,7 +122,6 @@ main { position: relative; flex: 1; display: grid; place-items: center; backgrou
   box-shadow: 0 0 15px rgba(255, 42, 109, 0.4);
 }
 .warn-icon { width: 28px; height: 28px; flex: 0 0 28px; color: var(--neon-pink); animation: blink 1s infinite alternate; }
-.warn-icon svg { width: 100% !important; height: 100% !important; }
 .warn-text span { font-size: 0.9rem; color: #ff88a8; }
 .warn-text #warningLabel { color: var(--neon-pink); font-size: 1.1rem; font-weight: 700; }
 
@@ -140,8 +138,11 @@ main { position: relative; flex: 1; display: grid; place-items: center; backgrou
   transition: all 0.2s;
 }
 .action-btn .key { font-size: 0.9rem; color: #fff; background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px; }
-.action-btn .icon { width: 32px; height: 32px; color: #a18ce8; }
-.action-btn .icon svg { width: 100% !important; height: 100% !important; }
+.action-btn .icon {
+  width: 32px; height: 32px; color: #a18ce8;
+  display: grid; place-items: center;
+  font-size: 24px; line-height: 1;
+}
 .action-btn .name { font-size: 0.8rem; color: var(--muted); text-align: center; line-height: 1; }
 
 .action-btn.active-j .icon { color: var(--neon-orange); filter: drop-shadow(0 0 8px var(--neon-orange)); }

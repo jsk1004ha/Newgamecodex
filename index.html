@@ -17,34 +17,21 @@
       <section id="hud" class="hud hidden">
         <div class="hud-top-left">
           <div class="stat-row hp-row">
-            <div class="hex-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 11c0 5.65-7 10-7 10z" />
-              </svg>
-            </div>
+            <div class="hex-icon" aria-hidden="true">♥</div>
             <div class="bar-container">
               <div class="bar-label">HP <span id="hpText" class="val">100 / 100</span></div>
               <div class="bar-bg"><div id="hpBar" class="bar fill-hp"></div></div>
             </div>
           </div>
           <div class="stat-row dash-row">
-            <div class="hex-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" />
-              </svg>
-            </div>
+            <div class="hex-icon" aria-hidden="true">⚡</div>
             <div class="bar-container">
               <div class="bar-label">DASH <span id="dashText" class="val">100 / 100</span></div>
               <div class="bar-bg"><div id="dashBar" class="bar fill-dash"></div></div>
             </div>
           </div>
           <div class="stat-row combo-row">
-            <div class="hex-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8L12 3z" />
-                <path d="M18 14l.9 2.1L21 17l-2.1.9L18 20l-.9-2.1L15 17l2.1-.9L18 14z" />
-              </svg>
-            </div>
+            <div class="hex-icon" aria-hidden="true">✦</div>
             <div class="bar-container">
               <div class="bar-label">COMBO <span id="comboText" class="val highlight">x0</span></div>
               <div class="bar-bg"><div id="comboBar" class="bar fill-combo"></div></div>
@@ -64,10 +51,7 @@
               <span class="boss-badge" id="bossBadge" style="display:none;">BOSS</span>
             </div>
             <div class="timer-info">
-              <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M12 7v5l3 2" />
-              </svg>
+              <span class="inline-icon" aria-hidden="true">⏱</span>
               <span id="timerLabel">00:00.00</span>
             </div>
           </div>
@@ -76,13 +60,7 @@
             <div id="objectiveLabel" class="obj-desc">Clear 3 Targets</div>
           </div>
           <div id="warningPanel" class="warning-panel hidden">
-            <div class="warn-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3l-8.47-14.14a2 2 0 0 0-3.42 0z" />
-                <path d="M12 9v4" />
-                <circle cx="12" cy="17" r="1" fill="currentColor" stroke="none" />
-              </svg>
-            </div>
+            <div class="warn-icon" aria-hidden="true">⚠</div>
             <div class="warn-text">
               <span>WARNING</span>
               <div id="warningLabel">HAZARD ZONE</div>
@@ -93,36 +71,17 @@
         <div class="hud-bottom-left">
           <div class="action-btn">
             <div class="key">SHIFT</div>
-            <div class="icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m5 12 5-5" />
-                <path d="m5 12 5 5" />
-                <path d="M13 7h6" />
-                <path d="M13 12h6" />
-                <path d="M13 17h6" />
-              </svg>
-            </div>
+            <div class="icon" aria-hidden="true">⇢</div>
             <div class="name">DASH</div>
           </div>
           <div class="action-btn active-k">
             <div class="key">K</div>
-            <div class="icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14.5 4.5 6 13l4 4 8.5-8.5a2.1 2.1 0 0 0-4-4z" />
-                <path d="m5 14 5 5" />
-              </svg>
-            </div>
+            <div class="icon" aria-hidden="true">✂</div>
             <div class="name">RAPID CUT</div>
           </div>
           <div class="action-btn active-j">
             <div class="key">J</div>
-            <div class="icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2v6" />
-                <path d="m15 8-3 4-3-4" />
-                <path d="M5 14a7 7 0 0 0 14 0" />
-              </svg>
-            </div>
+            <div class="icon" aria-hidden="true">⬇</div>
             <div class="name">HEAVY PULSE</div>
           </div>
         </div>
