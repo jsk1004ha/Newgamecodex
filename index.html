@@ -4,38 +4,90 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shardsprint: Counter Pulse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="app">
-    <header class="topbar">
-      <h1>SHARDSPRINT: COUNTER PULSE</h1>
-      <div class="meta">Offline Vanilla JS Action</div>
-    </header>
-
     <main>
       <canvas id="game" width="1280" height="720" aria-label="액션 게임 캔버스"></canvas>
 
       <section id="menuLayer" class="panel active" aria-live="polite"></section>
 
       <section id="hud" class="hud hidden">
-        <div class="hud-left">
-          <div class="meter"><span>HP</span><div id="hpBar" class="bar fill-hp"></div></div>
-          <div class="meter"><span>DASH</span><div id="dashBar" class="bar fill-dash"></div></div>
-          <div class="meter"><span>COMBO</span><div id="comboBar" class="bar fill-combo"></div></div>
+        <div class="hud-top-left">
+          <div class="stat-row hp-row">
+            <div class="hex-icon" aria-hidden="true">♥</div>
+            <div class="bar-container">
+              <div class="bar-label">HP <span id="hpText" class="val">100 / 100</span></div>
+              <div class="bar-bg"><div id="hpBar" class="bar fill-hp"></div></div>
+            </div>
+          </div>
+          <div class="stat-row dash-row">
+            <div class="hex-icon" aria-hidden="true">⚡</div>
+            <div class="bar-container">
+              <div class="bar-label">DASH <span id="dashText" class="val">100 / 100</span></div>
+              <div class="bar-bg"><div id="dashBar" class="bar fill-dash"></div></div>
+            </div>
+          </div>
+          <div class="stat-row combo-row">
+            <div class="hex-icon" aria-hidden="true">✦</div>
+            <div class="bar-container">
+              <div class="bar-label">COMBO <span id="comboText" class="val highlight">x0</span></div>
+              <div class="bar-bg"><div id="comboBar" class="bar fill-combo"></div></div>
+            </div>
+          </div>
         </div>
-        <div class="hud-center">
-          <div id="stageLabel"></div>
-          <div id="timerLabel"></div>
+
+        <div class="hud-top-center cyber-panel" id="bossHud" style="display: none;">
+          <div class="boss-label">PRISM CORE <span id="bossHpText">0 / 0</span></div>
+          <div class="boss-bar-bg"><div id="bossHpBar" class="bar fill-boss"></div></div>
         </div>
-        <div class="hud-right">
-          <div id="objectiveLabel"></div>
-          <div id="warningLabel"></div>
+
+        <div class="hud-top-right">
+          <div class="info-panel">
+            <div class="stage-info">
+              <span id="stageLabel">STAGE 1 / 12</span>
+              <span class="boss-badge" id="bossBadge" style="display:none;">BOSS</span>
+            </div>
+            <div class="timer-info">
+              <span class="inline-icon" aria-hidden="true">⏱</span>
+              <span id="timerLabel">00:00.00</span>
+            </div>
+          </div>
+          <div class="objective-panel">
+            <div class="obj-title">OBJECTIVE</div>
+            <div id="objectiveLabel" class="obj-desc">Clear 3 Targets</div>
+          </div>
+          <div id="warningPanel" class="warning-panel hidden">
+            <div class="warn-icon" aria-hidden="true">⚠</div>
+            <div class="warn-text">
+              <span>WARNING</span>
+              <div id="warningLabel">HAZARD ZONE</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hud-bottom-left">
+          <div class="action-btn">
+            <div class="key">SHIFT</div>
+            <div class="icon" aria-hidden="true">⇢</div>
+            <div class="name">DASH</div>
+          </div>
+          <div class="action-btn active-k">
+            <div class="key">K</div>
+            <div class="icon" aria-hidden="true">✂</div>
+            <div class="name">RAPID CUT</div>
+          </div>
+          <div class="action-btn active-j">
+            <div class="key">J</div>
+            <div class="icon" aria-hidden="true">⬇</div>
+            <div class="name">HEAVY PULSE</div>
+          </div>
         </div>
       </section>
     </main>
   </div>
-
   <script src="game.js"></script>
 </body>
 </html>
